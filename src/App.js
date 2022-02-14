@@ -1,23 +1,20 @@
-import logo from './logo.svg';
-import './App.css';
+import 'bootstrap/dist/css/bootstrap.css';
+import { Route, Routes } from 'react-router';
+import { useRecoilValue } from 'recoil';
+import TodoDetail from './components/TodoDetail';
+import TodoList from './components/TodoList';
+import { todoListState } from './recoilState';
 
 function App() {
+  const todoList = useRecoilValue(todoListState);
+  localStorage.setItem("todoRecoil", JSON.stringify(todoList));
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="App m-5">
+      <Routes>
+        <Route path='/' element={<TodoList />} />
+        {todoList.map((todo) => { return <Route path={todo.id} element={<TodoDetail todo={todo} />} key={todo.id} /> })}
+      </Routes>
+
     </div>
   );
 }
