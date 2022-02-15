@@ -4,6 +4,8 @@ import { todoListState } from '../recoilState';
 import moment from 'moment';
 
 function TodoInput() {
+    console.log("render TodoInput");
+
     const [input, setInput] = useState();
     const setTodoList = useSetRecoilState(todoListState);
     const addTodo = () => {
@@ -23,8 +25,7 @@ function TodoInput() {
 
     return (
         <div className='d-flex my-2'>
-            <input className="col form-control" type="text" value={input} onChange={(e) => setInput(e.target.value)}></input>
-
+            <input className="col form-control" type="text" value={input} onChange={(e) => setInput(e.target.value)} />
             <button className='btn btn-primary mx-2' onClick={addTodo}>Add</button>
 
         </div>

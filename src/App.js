@@ -3,11 +3,12 @@ import { Route, Routes } from 'react-router';
 import { useRecoilValue } from 'recoil';
 import TodoDetail from './components/TodoDetail';
 import TodoList from './components/TodoList';
-import { todoListState } from './recoilState';
+import { todoListState, TODO_STORAGE } from './recoilState';
 
 function App() {
   const todoList = useRecoilValue(todoListState);
-  localStorage.setItem("todoRecoil", JSON.stringify(todoList));
+  localStorage.setItem(TODO_STORAGE, JSON.stringify(todoList));
+
   return (
     <div className="App m-5">
       <Routes>
