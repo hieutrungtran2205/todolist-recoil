@@ -5,7 +5,7 @@ import TodoInput from './TodoInput';
 import TodoItem from './TodoItem';
 
 function TodoList() {
-    console.log("render TodoList");
+    //console.log("render TodoList");
 
     const todoList = useRecoilValue(todoListState);
 

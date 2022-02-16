@@ -1,8 +1,8 @@
 import moment from 'moment';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
-import { todoListState, TODO_STORAGE } from '../recoilState';
+import { todoListState } from '../recoilState';
 
 export const deleteTodoAtIndex = (todoList, index) => {
     return [...todoList.slice(0, index), ...todoList.slice(index + 1)];
@@ -13,7 +13,7 @@ export const updateTodoAtIndex = (arr, index, newValue) => {
 };
 
 function TodoItem({ todo }) {
-    console.log("render TodoItem");
+    //console.log("render TodoItem");
 
     const [todoList, setTodoList] = useRecoilState(todoListState);
     const [name, setName] = useState(todo.name);
@@ -22,7 +22,7 @@ function TodoItem({ todo }) {
 
     const deleteTodo = () => {
         const newTodoList = deleteTodoAtIndex(todoList, index);
-        localStorage.setItem(TODO_STORAGE, JSON.stringify(newTodoList));
+
         setTodoList(newTodoList);
     };
 
@@ -32,7 +32,7 @@ function TodoItem({ todo }) {
             name: name,
             time: moment().format('hh:mm:ss - DD/MM/YYYY')
         });
-        localStorage.setItem(TODO_STORAGE, JSON.stringify(newTodoList));
+
         setTodoList(newTodoList);
     };
 
