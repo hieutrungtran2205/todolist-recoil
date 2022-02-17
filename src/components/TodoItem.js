@@ -1,8 +1,8 @@
 import moment from 'moment';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { useRecoilState } from 'recoil';
-import { todoListState } from '../recoilState';
+import { useRecoilState, useSetRecoilState } from 'recoil';
+import { todoIdState, todoListState } from '../recoilState';
 
 export const deleteTodoAtIndex = (todoList, index) => {
     return [...todoList.slice(0, index), ...todoList.slice(index + 1)];
@@ -13,13 +13,13 @@ export const updateTodoAtIndex = (arr, index, newValue) => {
 };
 
 function TodoItem({ todo }) {
-    //console.log("render TodoItem");
+    console.log("render TodoItem");
 
     const [todoList, setTodoList] = useRecoilState(todoListState);
     const [name, setName] = useState(todo.name);
     const [editable, setEditable] = useState(false);
     const index = todoList.findIndex((todoItem) => todoItem === todo);
-
+    const setDetail = useSetRecoilState(todoIdState)
     const deleteTodo = () => {
         const newTodoList = deleteTodoAtIndex(todoList, index);
 
@@ -50,7 +50,8 @@ function TodoItem({ todo }) {
                         }
                     />
                     :
-                    <Link to={todo.id} className='d-flex justify-content-between align-items-center text-decoration-none text-dark'>
+                    <Link to={todo.id} className='d-flex justify-content-between align-items-center text-decoration-none text-dark'
+                        onClick={() => setDetail(todo.id)}>
                         <h5 className='mx-4'>{todo.name}</h5>
                         <span>{todo.time}</span>
                     </Link>

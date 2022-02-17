@@ -7,3 +7,12 @@ export const todoListState = atom({
     default: JSON.parse(localStorage.getItem(TODO_STORAGE)) ?? []
 }
 );
+
+export const todoIdState = atom({
+    key: "todoDetailState",
+    default: null
+}
+);
+
+
+

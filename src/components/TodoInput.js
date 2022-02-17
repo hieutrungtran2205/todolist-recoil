@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React, { memo, useState } from 'react';
 import { useSetRecoilState } from 'recoil';
 import { todoListState } from '../recoilState';
 import moment from 'moment';
 
 function TodoInput() {
-    //console.log("render TodoInput");
+    console.log("render TodoInput");
 
     const [input, setInput] = useState();
     const setTodoList = useSetRecoilState(todoListState);
@@ -32,4 +32,4 @@ function TodoInput() {
     );
 }
 
-export default TodoInput;
+export default memo(TodoInput);

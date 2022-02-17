@@ -1,16 +1,17 @@
 import moment from 'moment';
 import { useState } from 'react';
-import { useRecoilState } from 'recoil';
-import { todoListState } from '../recoilState';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { todoIdState, todoListState } from '../recoilState';
 import { updateTodoAtIndex } from './TodoItem';
 
-function TodoDetail({ todo }) {
-    //console.log("render TodoDetail");
+function TodoDetail() {
+    console.log("render TodoDetail");
 
+    const todoId = useRecoilValue(todoIdState);
     const [todoList, setTodoList] = useRecoilState(todoListState);
-    const [name, setName] = useState(todo.name);
+    const index = todoList.findIndex((todoItem) => todoItem.id === todoId);
+    const [name, setName] = useState(todoList[index].name);
     const [editable, setEditable] = useState(false);
-    const index = todoList.findIndex((todoItem) => todoItem === todo);
 
     const deleteTodoAtIndex = (todoList, index) => {
         return [...todoList.slice(0, index), ...todoList.slice(index + 1)];
@@ -23,7 +24,7 @@ function TodoDetail({ todo }) {
 
     const updateTodo = (name) => {
         const newTodoList = updateTodoAtIndex(todoList, index, {
-            ...todo,
+            ...todoList[index],
             name: name,
             time: moment().format('hh:mm:ss - DD/MM/YYYY')
         });
@@ -43,8 +44,8 @@ function TodoDetail({ todo }) {
                     />
                     :
                     <div className='d-flex justify-content-between align-items-center'>
-                        <h5 className='mx-4'>{todo.name}</h5>
-                        <span>{todo.time}</span>
+                        <h5 className='mx-4'>{todoList[index].name}</h5>
+                        <span>{todoList[index].time}</span>
                     </div>
                 }
 
