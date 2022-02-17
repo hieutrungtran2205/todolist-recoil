@@ -1,9 +1,9 @@
-import 'bootstrap/dist/css/bootstrap.css';
 import { Route, Routes } from 'react-router';
 import { useRecoilValue } from 'recoil';
 import TodoDetail from './components/TodoDetail';
 import TodoList from './components/TodoList';
 import { todoListState, TODO_STORAGE } from './recoilState';
+import 'bootstrap/dist/css/bootstrap.css';
 
 function App() {
   const todoList = useRecoilValue(todoListState);

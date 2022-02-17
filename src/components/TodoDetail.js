@@ -1,8 +1,8 @@
-import moment from 'moment';
 import { useState } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { todoIdState, todoListState } from '../recoilState';
-import { updateTodoAtIndex } from './TodoItem';
+import { deleteTodoAtIndex, updateTodoAtIndex } from './TodoItem';
+import moment from 'moment';
 
 function TodoDetail() {
     console.log("render TodoDetail");
@@ -12,10 +12,6 @@ function TodoDetail() {
     const index = todoList.findIndex((todoItem) => todoItem.id === todoId);
     const [name, setName] = useState(todoList[index].name);
     const [editable, setEditable] = useState(false);
-
-    const deleteTodoAtIndex = (todoList, index) => {
-        return [...todoList.slice(0, index), ...todoList.slice(index + 1)];
-    };
 
     const deleteTodo = () => {
         const newTodoList = deleteTodoAtIndex(todoList, index);
