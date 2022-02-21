@@ -19,7 +19,7 @@ function TodoItem({ todo }) {
     const [name, setName] = useState(todo.name);
     const [editable, setEditable] = useState(false);
     const index = todoList.findIndex((todoItem) => todoItem === todo);
-    const setDetail = useSetRecoilState(todoIdState)
+    const setDetail = useSetRecoilState(todoIdState);
     const deleteTodo = () => {
         const newTodoList = deleteTodoAtIndex(todoList, index);
 

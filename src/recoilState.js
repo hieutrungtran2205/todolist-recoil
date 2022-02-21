@@ -13,6 +13,3 @@ export const todoIdState = atom({
     default: null
 }
 );
-
-
-

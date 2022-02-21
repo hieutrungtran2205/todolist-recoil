@@ -1,13 +1,15 @@
-import React, { memo, useState } from 'react';
+import moment from 'moment';
+import { memo, useRef, useState } from 'react';
 import { useSetRecoilState } from 'recoil';
 import { todoListState } from '../recoilState';
-import moment from 'moment';
 
 function TodoInput() {
     console.log("render TodoInput");
 
     const [input, setInput] = useState();
     const setTodoList = useSetRecoilState(todoListState);
+    const inputRef = useRef();
+
     const addTodo = () => {
         setTodoList((todoList) => [
             ...todoList,
@@ -21,11 +23,12 @@ function TodoInput() {
         ]);
 
         setInput('');
+        inputRef.current.focus();
     };
 
     return (
         <div className='d-flex my-2'>
-            <input className="col form-control" type="text" value={input} onChange={(e) => setInput(e.target.value)} />
+            <input ref={inputRef} className="col form-control" type="text" value={input} onChange={(e) => setInput(e.target.value)} />
             <button className='btn btn-primary mx-2' onClick={addTodo}>Add</button>
 
         </div>
