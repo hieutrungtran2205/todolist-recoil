@@ -10,6 +10,6 @@ export const todoListState = atom({
 
 export const todoIdState = atom({
     key: "todoDetailState",
-    default: null
+    default: undefined
 }
 );
