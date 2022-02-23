@@ -1,17 +1,37 @@
 import { useState } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
-import { todoIdState, todoListState } from '../recoilState';
+import { colorDoneState, todoIdState, todoListState } from '../recoilState';
 import { deleteTodoAtIndex, updateTodoAtIndex } from './TodoItem';
 import moment from 'moment';
 
 function TodoDetail() {
-    console.log("render TodoDetail");
+    //console.log("render TodoDetail");
 
     const todoId = useRecoilValue(todoIdState);
     const [todoList, setTodoList] = useRecoilState(todoListState);
     const index = todoList.findIndex((todoItem) => todoItem.id === todoId);
     const [name, setName] = useState(todoList[index].name);
     const [editable, setEditable] = useState(false);
+    const [done, setDone] = useState(todoList[index].done);
+    const [color, setColor] = useRecoilState(colorDoneState(todoList[index].id));
+    const DoneButton = () => {
+        const isDone = () => {
+            const newTodoList = updateTodoAtIndex(todoList, index, {
+                ...todoList[index],
+                done: !done
+            });
+            setTodoList(newTodoList);
+
+            if (done) {
+                setColor(color);
+                setDone(!done)
+            } else {
+                setColor("green")
+                setDone(!done)
+            }
+        };
+        return <button className="btn btn-success m-2" onClick={isDone}>Done</button>
+    }
 
     const deleteTodo = () => {
         const newTodoList = deleteTodoAtIndex(todoList, index);
@@ -22,14 +42,14 @@ function TodoDetail() {
         const newTodoList = updateTodoAtIndex(todoList, index, {
             ...todoList[index],
             name: name,
-            time: moment().format('hh:mm:ss - DD/MM/YYYY')
+            time: moment().format('hh:mm:ss - DD/MM/YYYY'),
         });
 
         setTodoList(newTodoList);
     };
 
     return (
-        <div className='d-flex align-items-center my-3'>
+        <div className='d-flex align-items-center my-3' style={done ? { background: "green" } : {}}>
             <div className='col'>
                 {editable ?
                     <input type="text" className="form-control"
@@ -46,7 +66,8 @@ function TodoDetail() {
                 }
 
             </div>
-            <button className="btn btn-primary m-2" onClick={() => {
+            <DoneButton />
+            <button className="btn btn-primary" onClick={() => {
                 updateTodo(name)
                 if (editable) {
                     setName(name);

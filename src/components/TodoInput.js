@@ -4,7 +4,7 @@ import { useSetRecoilState } from 'recoil';
 import { todoListState } from '../recoilState';
 
 function TodoInput() {
-    console.log("render TodoInput");
+    //console.log("render TodoInput");
 
     const [input, setInput] = useState();
     const setTodoList = useSetRecoilState(todoListState);
@@ -17,7 +17,8 @@ function TodoInput() {
             {
                 id: new Date().getTime().toString(),
                 name: input,
-                time: moment().format('hh:mm:ss - DD/MM/YYYY')
+                time: moment().format('hh:mm:ss - DD/MM/YYYY'),
+                done: false
             },
 
         ]);
