@@ -14,24 +14,23 @@ function TodoDetail() {
     const [editable, setEditable] = useState(false);
     const [done, setDone] = useState(todoList[index].done);
     const [color, setColor] = useRecoilState(colorDoneState(todoList[index].id));
-    const DoneButton = () => {
-        const isDone = () => {
-            const newTodoList = updateTodoAtIndex(todoList, index, {
-                ...todoList[index],
-                done: !done
-            });
-            setTodoList(newTodoList);
 
-            if (done) {
-                setColor(color);
-                setDone(!done)
-            } else {
-                setColor("green")
-                setDone(!done)
-            }
-        };
-        return <button className="btn btn-success m-2" onClick={isDone}>Done</button>
-    }
+    const isDone = () => {
+        const newTodoList = updateTodoAtIndex(todoList, index, {
+            ...todoList[index],
+            done: !done
+        });
+        setTodoList(newTodoList);
+
+        if (done) {
+            setColor(color);
+            setDone(!done)
+        } else {
+            setColor("green")
+            setDone(!done)
+        }
+    };
+    <button className="btn btn-success m-2" onClick={isDone}>Done</button>
 
     const deleteTodo = () => {
         const newTodoList = deleteTodoAtIndex(todoList, index);
@@ -66,7 +65,7 @@ function TodoDetail() {
                 }
 
             </div>
-            <DoneButton />
+            <button className="btn btn-success m-2" onClick={isDone}>Done</button>
             <button className="btn btn-primary" onClick={() => {
                 updateTodo(name)
                 if (editable) {

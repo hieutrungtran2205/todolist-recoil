@@ -22,24 +22,22 @@ function TodoItem({ todo }) {
     const [color, setColor] = useRecoilState(colorDoneState(todo.id));
     const index = todoList.findIndex((todoItem) => todoItem === todo);
     const setDetail = useSetRecoilState(todoIdState);
-    const DoneButton = () => {
-        const isDone = () => {
-            const newTodoList = updateTodoAtIndex(todoList, index, {
-                ...todo,
-                done: !done
-            });
-            setTodoList(newTodoList);
 
-            if (done) {
-                setColor(color);
-                setDone(!done)
-            } else {
-                setColor("green")
-                setDone(!done)
-            }
-        };
-        return <button className="btn btn-success m-2" onClick={isDone}>Done</button>
-    }
+    const isDone = () => {
+        const newTodoList = updateTodoAtIndex(todoList, index, {
+            ...todo,
+            done: !done
+        });
+        setTodoList(newTodoList);
+
+        if (done) {
+            setColor(color);
+            setDone(!done)
+        } else {
+            setColor("green")
+            setDone(!done)
+        }
+    };
 
     const deleteTodo = () => {
         const newTodoList = deleteTodoAtIndex(todoList, index);
@@ -80,7 +78,7 @@ function TodoItem({ todo }) {
                 }
 
             </div>
-            <DoneButton />
+            <button className="btn btn-success m-2" onClick={isDone}>Done</button>
             <button className="btn btn-primary"
                 onClick={() => {
                     updateTodo(name)
