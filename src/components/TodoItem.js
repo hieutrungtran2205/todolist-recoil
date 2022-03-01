@@ -1,7 +1,8 @@
-import moment from 'moment';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useRecoilState, useSetRecoilState } from 'recoil';
+import useDeleteTodo from '../hooks/useDeleteTodo';
+import useUpdateTodo from '../hooks/useUpdateTodo';
 import { colorDoneState, todoIdState, todoListState } from '../recoilState';
 
 export const deleteTodoAtIndex = (todoList, index) => {
@@ -13,14 +14,14 @@ export const updateTodoAtIndex = (arr, index, newValue) => {
 };
 
 function TodoItem({ todo }) {
-    //console.log("render TodoItem");
+    console.log("render TodoItem");
 
     const [todoList, setTodoList] = useRecoilState(todoListState);
     const [name, setName] = useState(todo.name);
     const [editable, setEditable] = useState(false);
     const [done, setDone] = useState(todo.done);
     const [color, setColor] = useRecoilState(colorDoneState(todo.id));
-    const index = todoList.findIndex((todoItem) => todoItem === todo);
+    const index = todoList.findIndex((todoItem) => todoItem.id === todo.id);
     const setDetail = useSetRecoilState(todoIdState);
 
     const isDone = () => {
@@ -39,25 +40,27 @@ function TodoItem({ todo }) {
         }
     };
 
-    const deleteTodo = () => {
-        const newTodoList = deleteTodoAtIndex(todoList, index);
+    const deleteTodo = useDeleteTodo(todo);
+    // const deleteTodo = () => {
+    //     const newTodoList = deleteTodoAtIndex(todoList, index);
 
-        setTodoList(newTodoList);
-    };
+    //     setTodoList(newTodoList);
+    // };
 
-    const updateTodo = (name) => {
-        const newTodoList = updateTodoAtIndex(todoList, index, {
-            ...todo,
-            name: name,
-            time: moment().format('hh:mm:ss - DD/MM/YYYY')
-        });
+    const updateTodo = useUpdateTodo(todo);
+    // const updateTodo = (name) => {
+    //     const newTodoList = updateTodoAtIndex(todoList, index, {
+    //         ...todo,
+    //         name: name,
+    //         time: moment().format('hh:mm:ss - DD/MM/YYYY')
+    //     });
 
-        setTodoList(newTodoList);
-    };
+    //     setTodoList(newTodoList);
+    // };
 
     return (
 
-        <div className='d-flex align-items-center my-3' style={done ? { background: "green" } : {}}>
+        <div className='d-flex align-items-center my-3' style={done ? { background: "green" } : {}} data-toggle="tooltip" data-placement="right" title={name}>
             <div className='stt m-2'>#</div>
             <div className='col'>
                 {editable ?

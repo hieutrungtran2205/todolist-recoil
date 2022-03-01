@@ -8,7 +8,6 @@ function TodoList() {
     const todoList = useRecoilValue(todoListState);
     const totalTodo = useRecoilValue(countTodoState);
     const data = useRecoilValue(getTodoAPI);
-    console.log("data in todoList:", data);
     return (
         <div>
             <h3 className='my-3'>TodoList Recoil</h3>

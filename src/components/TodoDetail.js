@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
+import useDeleteTodo from '../hooks/useDeleteTodo';
+import useUpdateTodo from '../hooks/useUpdateTodo';
 import { colorDoneState, todoIdState, todoListState } from '../recoilState';
-import { deleteTodoAtIndex, updateTodoAtIndex } from './TodoItem';
-import moment from 'moment';
+import { updateTodoAtIndex } from './TodoItem';
 
 function TodoDetail() {
     //console.log("render TodoDetail");
@@ -32,20 +33,23 @@ function TodoDetail() {
     };
     <button className="btn btn-success m-2" onClick={isDone}>Done</button>
 
-    const deleteTodo = () => {
-        const newTodoList = deleteTodoAtIndex(todoList, index);
-        setTodoList(newTodoList);
-    };
+    const deleteTodo = useDeleteTodo(todoList[index]);
+    // const deleteTodo = () => {
+    //     const newTodoList = deleteTodoAtIndex(todoList, index);
 
-    const updateTodo = (name) => {
-        const newTodoList = updateTodoAtIndex(todoList, index, {
-            ...todoList[index],
-            name: name,
-            time: moment().format('hh:mm:ss - DD/MM/YYYY'),
-        });
+    //     setTodoList(newTodoList);
+    // };
 
-        setTodoList(newTodoList);
-    };
+    const updateTodo = useUpdateTodo(todoList[index]);
+    // const updateTodo = (name) => {
+    //     const newTodoList = updateTodoAtIndex(todoList, index, {
+    //         ...todo,
+    //         name: name,
+    //         time: moment().format('hh:mm:ss - DD/MM/YYYY')
+    //     });
+
+    //     setTodoList(newTodoList);
+    // };
 
     return (
         <div className='d-flex align-items-center my-3' style={done ? { background: "green" } : {}}>
